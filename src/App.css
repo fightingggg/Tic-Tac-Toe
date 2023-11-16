@@ -1,0 +1,49 @@
+body{
+  background-color: black;
+  color:white;
+}
+
+.game{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.status{
+  padding-left: 25px;
+}
+.game-info{
+  margin-left: 20px;;
+}
+
+.game-boaed{
+  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.5);
+}
+
+.status{
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding-left: 50px;
+}
+
+.move_button{
+  background-color: orange;
+  padding: 10px;
+  border-radius: 10px;
+  width:200px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+
+}
+
+.move_button:hover{
+  background-color: darkorange;
+}
+/* 
+.gamebutton{
+  margin-right: 100px;
+} */
