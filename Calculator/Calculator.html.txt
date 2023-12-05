@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    /* style.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: ;
+}
+
+.calculator {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fff;
+}
+
+#display {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.button-row {
+    display: flex;
+}
+
+button {
+    flex: 1;
+    padding: 10px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+button.large {
+    flex: 2;
+}
+
+</style>
+<body>
+    <div class="calculator">
+        <div id="display">0</div>
+        <div class="button-row">
+            <button onclick="clearDisplay()">AC</button>
+            <button onclick="deleteLast()">DE</button>
+            <button onclick="appendNumber('.')">.</button>
+            <button onclick="chooseOperation('/')">/</button>
+        </div>
+        <div class="button-row">
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="chooseOperation('*')">*</button>
+        </div>
+        <div class="button-row">
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="chooseOperation('-')">-</button>
+        </div>
+        <div class="button-row">
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button onclick="chooseOperation('+')">+</button>
+        </div>
+        <div class="button-row">
+            <button onclick="appendNumber('00')">00</button>
+            <button onclick="appendNumber('0')">0</button>
+            <button class="large" onclick="compute()">=</button>
+        </div>
+    </div>
+</body>
+<SCRIPT>
+    // script.js
+let currentOperand = '';
+let previousOperand = '';
+let operation = null;
+
+function appendNumber(number) {
+    if (number === '.' && currentOperand.includes('.'))  // 사용자가 소수점을 눌렀을 때 현재 소수점이 있는지 확인 
+    return;
+    currentOperand = currentOperand.toString() + number.toString();
+    //이 부분은 사용자가 숫자 버튼을 연속적으로 누를 때마다 각 숫자를 이어 붙여 하나의 연속된 숫자로 표시해주는 역할을 함ㅁ.
+    updateDisplay(); // 입력하는 값 display 업데이트
+}
+
+function chooseOperation(op) { //chooseOperation 함수는 사칙연산중 하나를 선택되었을떄 호출되는 함수
+    if (currentOperand === '') return; // 숫자를 입력하기 전에 연산자를 누르는 것을 방지
+    if (previousOperand !== '') { //previousOperand 변수가 비어있지 않은 경우, 이미 저장된 값이 있는 경우 compute함수를 호출
+        compute(); //사용자가 새로운 연산을 시작하기 전에 이전 연산을 완료하고 결과를 계산하는 데 사용
+    }
+    operation = op; // 'op'라는 매개변수로 받은 연산자('+', '-', '*', '/')를 'operation' 변수에 저장합니다. 이는 나중에 계산할 때 사용됩니다.
+    previousOperand = currentOperand; // 현재 화면에 표시된 숫자(현재 피연산자)를 'previousOperand' 변수에 저장합니다. 이 값은 다음 계산에서 이전 값으로 사용됩니다.
+    currentOperand = ''; // 'currentOperand' 변수를 빈 문자열로 초기화하여, 사용자가 새로운 숫자를 입력할 수 있도록 준비합니다.
+}
+
+function compute() {
+    let computation;
+    const prev = parseFloat(previousOperand);
+    //이 코드는 previousOperand 변수의 값을 실수로 변환하여 prev라는 새 변수에 저장함.
+    const current = parseFloat(currentOperand);
+    //currentOperand 변수의 값을 실수로 변환하여 current라는 새 변수에 저장함.
+    if (isNaN(prev) || isNaN(current)) return; 
+// prev 또는 current 중 하나라도 숫자가 아니면 함수를 종료합니다.
+
+if (operation === '+') {
+    computation = prev + current; 
+    // 연산자가 '+'인 경우, prev와 current를 더합니다.
+} else if (operation === '-') {
+    computation = prev - current; 
+    // 연산자가 '-'인 경우, prev에서 current를 뺍니다.
+} else if (operation === '*') {
+    computation = prev * current; 
+    // 연산자가 '*'인 경우, prev와 current를 곱합니다.
+} else if (operation === '/') {
+    computation = prev / current; 
+    // 연산자가 '/'인 경우, prev를 current로 나눕니다.
+} else {
+    return; 
+    // 지정된 연산자가 없으면 함수를 종료합니다.
+
+
+}
+
+currentOperand = computatio
+// 계산 결과(computation)를 currentOperand에 저장합니다. 이 값은 화면에 표시됩니다.
+
+operation = undefined;
+// 연산을 완료했으므로, 현재 선택된 연산자를 초기화합니다.
+
+previousOperand = '';
+// 이전 피연산자 값을 초기화합니다. 새로운 계산을 위해 이전 값은 더 이상 필요하지 않습니다.
+
+updateDisplay();
+// 화면에 현재 피연산자(currentOperand)를 업데이트하여 사용자에게 결과를 보여줍니다.
+
+}
+
+function clearDisplay() {
+    currentOperand = ''; // 현재 피연산자를 빈 문자열로 설정하여 화면의 숫자를 지웁니다.
+    previousOperand = ''; // 이전 피연산자도 빈 문자열로 설정하여 이전에 입력했던 숫자를 지웁니다.
+    operation = null; // 선택된 연산자를 null로 설정하여 현재 선택된 연산을 취소합니다.
+    updateDisplay();
+}
+
+function deleteLast() {
+    currentOperand = currentOperand.toString().slice(0, -1);
+    updateDisplay();
+}
+
+function updateDisplay() {
+    document.getElementById('display').innerText = currentOperand;
+}
+
+</SCRIPT>
+</html>
