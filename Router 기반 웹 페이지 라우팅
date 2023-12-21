@@ -1,0 +1,38 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+const Home = () => {
+  return <p>Welcome to React-dom</p>;
+};
+
+const Title = () => {
+  return <p>타이틀</p>;
+};
+
+const Detail = () => {
+  return <p>세부사항</p>;
+};
+
+const NotFound = () => {
+  return <p>404 Not Found</p>;
+};
+
+export default function App() {
+  return (
+    <Router>
+      <div className="App">
+        <nav style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <Link to="/" style={{ cursor: "pointer" }}>Home</Link>
+          <Link to="/title" style={{ cursor: "pointer" }}>Title</Link>
+          <Link to="/detail" style={{ cursor: "pointer" }}>Detail</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/title" element={<Title />} />
+          <Route path="/detail" element={<Detail />} />
+          <Route path="*" element={<NotFound />} /> {/* *은 모든 다른 경로에 대한 처리 */}
+        </Routes>
+      </div>
+    </Router>
+  );
+}
